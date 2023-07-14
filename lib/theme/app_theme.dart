@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  static const Color primary = Color.fromARGB(255, 122, 22, 51);
+  static const Color primary = Colors.indigo;
 
   static final ThemeData lightTheme = ThemeData.light().copyWith(
       //Color primario
