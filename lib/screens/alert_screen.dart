@@ -1,8 +1,44 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AlertScreen extends StatelessWidget {
   const AlertScreen({super.key});
-  void displayDialog(BuildContext context) {
+
+  void displayDialogIOS(BuildContext context) {
+    showCupertinoDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return CupertinoAlertDialog(
+            title: const Text('Titulo'),
+            content: const Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text('Este es el contenido de la alerta'),
+                SizedBox(height: 10),
+                FlutterLogo(
+                  size: 100,
+                )
+              ],
+            ),
+            actions: [
+              TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text(
+                    'Ok',
+                    style: TextStyle(color: Colors.red),
+                  )),
+              TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('Cancelar'))
+            ],
+          );
+        });
+  }
+
+  void displayDialogAndroid(BuildContext context) {
     showDialog(
         barrierDismissible: false,
         context: context,
@@ -25,6 +61,9 @@ class AlertScreen extends StatelessWidget {
             actions: [
               TextButton(
                   onPressed: () => Navigator.pop(context),
+                  child: const Text('Ok')),
+              TextButton(
+                  onPressed: () => Navigator.pop(context),
                   child: const Text('Cancelar'))
             ],
           );
@@ -36,7 +75,10 @@ class AlertScreen extends StatelessWidget {
     return Scaffold(
         body: Center(
             child: ElevatedButton(
-                onPressed: () => displayDialog(context),
+                //onPressed: () => displayDialogAndroid(context),
+                onPressed: () => Platform.isIOS
+                    ? displayDialogIOS(context)
+                    : displayDialogAndroid(context),
                 child: const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                   child: Text(
